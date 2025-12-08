@@ -6,15 +6,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task 03</title>
+    <style>
+        .photo-item{
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            gap:5px
+        }
+    </style>
 </head>
 
 <body>
+    <button id="loadButton">Загрузить список задач</button> <span id="loader" style="display: none;">Загрузка...</span>
+    <div id="todoList">
+    </div>
     <script>
         /*
         Задание:
         Напишите сценарий, который при загрузке страницы выполнит GET запрос на https://jsonplaceholder.typicode.com/photos
         и выведет на странице все изображения в виде <img>, которые будут получены в ответе.
         */
+        let url = "https://jsonplaceholder.typicode.com/todos";
+        let loadButton = document.querySelector("#loadButton");
+        let loader = document.querySelector("#loader");
+        let todoList = document.querySelector("#todoList");
+
+        loadButton.addEventListener("click", function () {
+            showLoader();
+            fetch(url)
+                .then(response => response.json())
+                .then(json => renderList(json))
+                .finally(hideLoader);
+        });
+          function showLoader() {
+            loader.style.display = "inline";
+        }
+
+        function hideLoader() {
+            loader.style.display = "none";
+        }
+
+        function renderPhotos(photos){
+            photos.forEach(photo => {
+                let wrapper = document.createElement("div")
+                wrapper.classList.add("photo-iteam")
+                let img = document.createElement("img")
+                img.src=photo.thumbnailUrl
+                img.alt = photo.title
+
+                let title = document.createElement("span")
+                title.textContent = `${photo.id} - ${photo.title}`
+                wrapper.append(img,title)
+                photoList.append(wrapper)
+            });
+        }
     </script>
 </body>
 

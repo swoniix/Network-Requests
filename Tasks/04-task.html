@@ -9,12 +9,37 @@
 </head>
 
 <body>
+    <table id="table">
+        <thead>
+            <th>ID</th>
+            <th>USER</th>
+            <th>TITLE</th>
+            <th>COMPLETED</th>
+        </thead>
+
+    </table>
     <script>
         /*
         Задание:
         Напишите сценарий, который выполняет GET запрос по адресу https://jsonplaceholder.typicode.com/todos
         И выводит содержимое ответа в виде таблицы.
         */
+       let url = " https://jsonplaceholder.typicode.com/todos"
+       let tbl = document.querySelector("#table")
+        function showLoader() {
+            loader.style.display = "inline";
+        }
+
+        function hideLoader() {
+            loader.style.display = "none";
+        }
+
+        function renderTable(list){
+            list.forEach(item => {
+                let tr= document.createElement("tr")
+                tr.classList.add(item.completed ? "completed" : "not-completed")
+            });
+        }
     </script>
 </body>
 
